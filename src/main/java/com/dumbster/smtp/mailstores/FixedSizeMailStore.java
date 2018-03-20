@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.dumbster.smtp.MailMessage;
 import com.dumbster.smtp.MailStore;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

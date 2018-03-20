@@ -7,11 +7,11 @@ import java.lang.reflect.Constructor;
 
 import com.dumbster.smtp.MailStore;
 import com.dumbster.smtp.mailstores.NullMailStore;
-import org.apache.commons.configuration.AbstractConfiguration;
-import org.apache.commons.configuration.CompositeConfiguration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.configuration.SystemConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
+import org.apache.commons.configuration2.CompositeConfiguration;
+import org.apache.commons.configuration2.SystemConfiguration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +49,8 @@ public class Config {
         // The order we want is: System, default file
         _config.addConfiguration(new SystemConfiguration());
         try {
-            _config.addConfiguration(new PropertiesConfiguration("dumbster.properties"));
+            Configurations cf = new Configurations();
+            _config.addConfiguration(cf.propertiesBuilder("dumbster.properties").getConfiguration());
         } catch (ConfigurationException e) {
             __l.warn("dumbster.properties not loaded");
         }
