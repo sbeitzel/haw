@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?><?import javafx.scene.control.MenuBar?><?import javafx.scene.control.MenuItem?><?import javafx.scene.input.KeyCodeCombination?><?import javafx.scene.layout.GridPane?>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+    prefHeight="400.0" prefWidth="600.0" stylesheets="/com/qbcps/haw/styles.css"
+    xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.qbcps.haw.Dashboard">
+    <MenuBar fx:id="_mBar" prefHeight="29.0" prefWidth="485.0" GridPane.columnSpan="2">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handlePreferences" text="Preferences">
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="SEMICOLON" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
+            <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="Quit">
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="Q" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                </accelerator>
+            </MenuItem>
+        </Menu>
+    </MenuBar>
+</GridPane>

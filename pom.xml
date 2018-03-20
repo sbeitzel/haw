@@ -28,6 +28,7 @@
     <properties>
         <application-name>Dumbster GUI</application-name>
         <commons-configuration.version>2.2</commons-configuration.version>
+        <commons-io.version>2.6</commons-io.version>
         <javafx-maven-plugin.version>8.8.3</javafx-maven-plugin.version>
         <jfx.bundler>dmg</jfx.bundler>
         <logback.version>1.2.3</logback.version>
@@ -67,6 +68,12 @@
             <artifactId>commons-configuration2</artifactId>
             <version>${commons-configuration.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+          <version>${commons-io.version}</version>
         </dependency>
 
         <dependency>
