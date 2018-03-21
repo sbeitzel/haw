@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -65,7 +66,13 @@ public abstract class AbstractSocketServer implements Runnable {
 
     public void initExecutor() {
         if (_executor == null) {
-            _executor = new ThreadPoolExecutor(_threadCount, _threadCount, 5, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>());
+            ThreadFactory workerFactory = r -> {
+                Thread t = new Thread(r);
+                t.setDaemon(true);
+                return t;
+            };
+            _executor = new ThreadPoolExecutor(_threadCount, _threadCount, 5, TimeUnit.MILLISECONDS,
+                                               new LinkedBlockingDeque<>(), workerFactory);
         }
     }
 
@@ -113,6 +120,9 @@ public abstract class AbstractSocketServer implements Runnable {
                 _serverSocket = null;
             }
         } catch (IOException ignored) {
+        }
+        if (_executor != null) {
+            _executor.shutdownNow();
         }
     }
 

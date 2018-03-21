@@ -27,6 +27,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
+            Platform.setImplicitExit(true);
             // read configuration
             // read preferences
             // display the main window

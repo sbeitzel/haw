@@ -4,7 +4,10 @@ package com.qbcps.haw;
          */
 
 import java.lang.reflect.Constructor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import com.dumbster.pop.POPServer;
 import com.dumbster.smtp.SmtpServer;
@@ -39,6 +42,7 @@ public class ServerInstance {
     private final AbstractMailStore _mailStore;
     private SimpleIntegerProperty _popPort = new SimpleIntegerProperty();
     private SimpleIntegerProperty _smtpPort = new SimpleIntegerProperty();
+    private ExecutorService _executor;
 
     public static ServerInstance startService(AbstractConfiguration config) {
         int smtpPort = config.getInt(PROP_SMTP_PORT);
@@ -84,30 +88,41 @@ public class ServerInstance {
         _smtpServer = new SmtpServer(smtpPort, smtpThreads, mailStore, socketTimeout);
         _popServer = new POPServer(pop3Port, pop3Threads, mailStore, socketTimeout);
 
-        Executors.newSingleThreadExecutor().execute(_smtpServer);
-        Executors.newSingleThreadExecutor().execute(_popServer);
+        _executor = new ThreadPoolExecutor(2, 2, 5, TimeUnit.MILLISECONDS,
+                                           new LinkedBlockingDeque<>(), r -> {
+                                               Thread t = new Thread(r);
+                                               t.setDaemon(true);
+                                               return t;
+                                           });
+        _executor.execute(_smtpServer);
+        _executor.execute(_popServer);
     }
 
     public void stop() {
         _smtpServer.stop();
-        __l.info("\nDumbster SMTP Server on port {} stopped", Integer.valueOf(_smtpServer.getPort()));
-        __l.info("\tTotal messages received: {}", Integer.valueOf(_smtpServer.getEmailCount()));
+        __l.info("Dumbster SMTP Server on port {} stopped", Integer.valueOf(_smtpServer.getPort()));
+        __l.info("Total messages received: {}", Integer.valueOf(_smtpServer.getEmailCount()));
         _popServer.stop();
-        __l.info("\nDumbster POP3 Server on port {} stopped", Integer.valueOf(_popServer.getPort()));
+        __l.info("Dumbster POP3 Server on port {} stopped", Integer.valueOf(_popServer.getPort()));
+        _executor.shutdownNow();
     }
 
+    @SuppressWarnings("unused")
     public Integer getSmtpPort() {
         return _smtpPort.getValue();
     }
 
+    @SuppressWarnings("unused")
     public Integer getPopPort() {
         return _popPort.getValue();
     }
 
+    @SuppressWarnings("unused")
     public Integer getMessageCount() {
         return _mailStore.getMessageCount();
     }
 
+    @SuppressWarnings("unused")
     public Integer getTotalReceived() {
         return _mailStore.getTotalReceived();
     }
