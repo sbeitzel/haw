@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 public class Main extends Application {
     private static final Logger __l = LoggerFactory.getLogger(Main.class);
 
+    private Dashboard _dashboard = null;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
@@ -32,8 +34,8 @@ public class Main extends Application {
             assert layoutIS != null;
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(layoutIS);
-            Dashboard d = loader.getController();
-            d.setStage(primaryStage);
+            _dashboard = loader.getController();
+            _dashboard.setStage(primaryStage);
 
             primaryStage.setTitle("haw - a simple email server for local testing"); // TODO get this string from one place
             primaryStage.setScene(new Scene(root, PrefsPage.getMainWindowWidth(), PrefsPage.getMainWindowHeight()));
@@ -51,5 +53,8 @@ public class Main extends Application {
     public void stop() throws Exception {
         // write preferences
         // stop servers
+        if (_dashboard != null) {
+            _dashboard.stopAll();
+        }
     }
 }

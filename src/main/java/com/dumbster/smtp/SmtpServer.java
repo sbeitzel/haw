@@ -36,6 +36,14 @@ public class SmtpServer extends AbstractSocketServer {
         initExecutor();
     }
 
+    public SmtpServer(int port, int threads, MailStore store, int socketTimeout) {
+        super(store, socketTimeout);
+        setPort(port);
+        setThreadCount(threads);
+        initExecutor();
+    }
+
+    @Override
     protected void serverLoop() throws IOException {
         __l.info("Dumbster SMTP server started on port "+getPort());
         while (!isStopped()) {

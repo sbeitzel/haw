@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dumbster.smtp.MailMessage;
-import com.dumbster.smtp.MailStore;
+import com.qbcps.haw.ServerInstance;
 import org.apache.commons.configuration2.AbstractConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +14,14 @@ import org.slf4j.LoggerFactory;
  * a FIFO expiration policy. This implementation is intended to be safe
  * for multithreaded access while still being reasonably fast.
  */
-public class FixedSizeMailStore implements MailStore {
+public class FixedSizeMailStore extends AbstractMailStore {
     private static final Logger __l = LoggerFactory.getLogger(FixedSizeMailStore.class);
-    private static final String PROP_MAXSIZE = "dumbster.FixedSizeMailStore.size";
 
     private final List<MailMessage> _messages = new ArrayList<>();
     private final int _maxSize;
 
     public FixedSizeMailStore(AbstractConfiguration config) {
-        _maxSize = config.getInt(PROP_MAXSIZE);
+        _maxSize = config.getInt(ServerInstance.PROP_MAXSIZE);
     }
 
     public FixedSizeMailStore(int size) {
@@ -43,10 +42,12 @@ public class FixedSizeMailStore implements MailStore {
         // Because there might be multiple threads accessing this store, we need to synchronize *all* access to the list. *sigh*
         synchronized (_messages) {
             _messages.add(message);
+            incrementTotalReceived();
             final int size = _messages.size();
             if (size > _maxSize) {
                 _messages.subList(0, size-_maxSize).clear();
             }
+            setMessageCount(_messages.size());
         }
     }
 
@@ -70,6 +71,7 @@ public class FixedSizeMailStore implements MailStore {
     public void clearMessages() {
         synchronized (_messages) {
             _messages.clear();
+            setMessageCount(0);
         }
     }
 
@@ -78,6 +80,7 @@ public class FixedSizeMailStore implements MailStore {
         synchronized (_messages) {
             if (index > -1 && index < _messages.size()) {
                 _messages.remove(index);
+                setMessageCount(_messages.size());
             }
         }
     }

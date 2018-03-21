@@ -2,6 +2,7 @@ package com.dumbster.pop;
 
 import java.io.IOException;
 
+import com.dumbster.smtp.MailStore;
 import com.dumbster.smtp.SocketWrapper;
 import com.dumbster.util.AbstractSocketServer;
 import com.dumbster.util.Config;
@@ -15,6 +16,13 @@ public class POPServer extends AbstractSocketServer {
         Config cfg = Config.getConfig();
         setPort(cfg.getPOP3Port());
         setThreadCount(cfg.getNumPOPThreads());
+        initExecutor();
+    }
+
+    public POPServer(int port, int threads, MailStore store, int socketTimeout) {
+        super(store, socketTimeout);
+        setPort(port);
+        setThreadCount(threads);
         initExecutor();
     }
 
