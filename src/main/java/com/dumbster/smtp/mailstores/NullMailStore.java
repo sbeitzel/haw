@@ -1,14 +1,14 @@
 package com.dumbster.smtp.mailstores;
 
 import com.dumbster.smtp.MailMessage;
-import com.dumbster.smtp.MailStore;
 
 /**
  * Do-nothing implementation of MailStore
  */
-public class NullMailStore implements MailStore {
+public class NullMailStore extends AbstractMailStore {
     @Override
     public void addMessage(MailMessage message) {
+        incrementTotalReceived();
     }
 
     @Override

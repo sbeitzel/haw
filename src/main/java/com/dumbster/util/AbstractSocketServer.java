@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.dumbster.smtp.MailStore;
-import com.dumbster.smtp.mailstores.NullMailStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +25,9 @@ public abstract class AbstractSocketServer implements Runnable {
 
     private volatile boolean _stopped = true;
     private volatile boolean _ready = false;
-    private volatile MailStore _mailStore = new NullMailStore();
+    private volatile MailStore _mailStore;
     private ServerSocket _serverSocket = null;
+    private int _socketTimeout;
     private int _port;
     private ThreadPoolExecutor _executor = null;
     private int _threadCount = 1;
@@ -34,6 +35,12 @@ public abstract class AbstractSocketServer implements Runnable {
     public AbstractSocketServer() {
         Config cfg = Config.getConfig();
         _mailStore = cfg.getMailStore();
+        _socketTimeout = cfg.getServerSocketTimeout();
+    }
+
+    public AbstractSocketServer(MailStore store, int socketTimeout) {
+        _mailStore = store;
+        _socketTimeout = socketTimeout;
     }
 
     public void setPort(int port) {
@@ -59,7 +66,13 @@ public abstract class AbstractSocketServer implements Runnable {
 
     public void initExecutor() {
         if (_executor == null) {
-            _executor = new ThreadPoolExecutor(_threadCount, _threadCount, 5, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>());
+            ThreadFactory workerFactory = r -> {
+                Thread t = new Thread(r);
+                t.setDaemon(true);
+                return t;
+            };
+            _executor = new ThreadPoolExecutor(_threadCount, _threadCount, 5, TimeUnit.MILLISECONDS,
+                                               new LinkedBlockingDeque<>(), workerFactory);
         }
     }
 
@@ -77,7 +90,7 @@ public abstract class AbstractSocketServer implements Runnable {
 
     protected void initializeServerSocket() throws Exception {
         _serverSocket = new ServerSocket(_port);
-        _serverSocket.setSoTimeout(Config.SERVER_SOCKET_TIMEOUT);
+        _serverSocket.setSoTimeout(_socketTimeout);
     }
 
     protected ServerSocket getServerSocket() {
@@ -107,6 +120,9 @@ public abstract class AbstractSocketServer implements Runnable {
                 _serverSocket = null;
             }
         } catch (IOException ignored) {
+        }
+        if (_executor != null) {
+            _executor.shutdownNow();
         }
     }
 

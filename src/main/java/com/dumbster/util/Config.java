@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 
 import com.dumbster.smtp.MailStore;
 import com.dumbster.smtp.mailstores.NullMailStore;
+import com.qbcps.haw.ServerInstance;
 import org.apache.commons.configuration2.AbstractConfiguration;
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.configuration2.SystemConfiguration;
@@ -29,13 +30,6 @@ public class Config {
     public static final int MAX_THREADS = 10;
     public static final int DEFAULT_SMTP_PORT = 25;
     public static final int DEFAULT_POP3_PORT = 110;
-
-    public static final String PROP_NUM_SMTP_THREADS = "dumbster.SMTP.numThreads";
-    public static final String PROP_NUM_POP3_THREADS = "dumbster.POP3.numThreads";
-    public static final String PROP_SMTP_PORT = "dumbster.SMTP.port";
-    public static final String PROP_POP3_PORT = "dumbster.POP3.port";
-    public static final String PROP_MAILSTORE_CLASS = "dumbster.mailstore.impl";
-    public static final String PROP_SERVER_SOCKET_TIMEOUT = "dumbster.serversocket.timeout";
 
     private static final int DEFAULT_THREADS = 1; // as implemented by rjo
 
@@ -60,12 +54,12 @@ public class Config {
             // first, see if there is a constructor that takes an AbstractConfiguration
             Constructor ctor;
             try {
-                ctor = (Class.forName(_config.getString(PROP_MAILSTORE_CLASS))).getDeclaredConstructor(AbstractConfiguration.class);
+                ctor = (Class.forName(_config.getString(ServerInstance.PROP_MAILSTORE_CLASS))).getDeclaredConstructor(AbstractConfiguration.class);
                 ctor.setAccessible(true);
                 _mailStore = (MailStore) ctor.newInstance(_config);
             } catch (Exception e) {
                 __l.info("Unable to find constructor that takes a configuration; trying no-arg constructor");
-                _mailStore = (MailStore) Class.forName(_config.getString(PROP_MAILSTORE_CLASS)).newInstance();
+                _mailStore = (MailStore) Class.forName(_config.getString(ServerInstance.PROP_MAILSTORE_CLASS)).newInstance();
             }
             _isValid = true;
         } catch (Exception e) {
@@ -81,7 +75,7 @@ public class Config {
     }
 
     public int getNumSMTPThreads() {
-        int threadCount = _config.getInt(PROP_NUM_SMTP_THREADS, DEFAULT_THREADS);
+        int threadCount = _config.getInt(ServerInstance.PROP_NUM_SMTP_THREADS, DEFAULT_THREADS);
         threadCount = Math.max(threadCount, 1);
         if (threadCount > MAX_THREADS) {
             threadCount = MAX_THREADS;
@@ -90,7 +84,7 @@ public class Config {
     }
 
     public int getNumPOPThreads() {
-        int threadCount = _config.getInt(PROP_NUM_POP3_THREADS, DEFAULT_THREADS);
+        int threadCount = _config.getInt(ServerInstance.PROP_NUM_POP3_THREADS, DEFAULT_THREADS);
         threadCount = Math.max(threadCount, 1);
         if (threadCount > MAX_THREADS) {
             threadCount = MAX_THREADS;
@@ -99,11 +93,11 @@ public class Config {
     }
     
     public void setNumSMTPThreads(int count) {
-        _config.setProperty(PROP_NUM_SMTP_THREADS, String.valueOf(count));
+        _config.setProperty(ServerInstance.PROP_NUM_SMTP_THREADS, String.valueOf(count));
     }
 
     public void setNumPOPThreads(int count) {
-        _config.setProperty(PROP_NUM_POP3_THREADS, String.valueOf(count));
+        _config.setProperty(ServerInstance.PROP_NUM_POP3_THREADS, String.valueOf(count));
     }
 
     public MailStore getMailStore() {
@@ -120,26 +114,26 @@ public class Config {
     }
 
     public int getSMTPPort() {
-        return _config.getInt(PROP_SMTP_PORT, DEFAULT_SMTP_PORT);
+        return _config.getInt(ServerInstance.PROP_SMTP_PORT, DEFAULT_SMTP_PORT);
     }
 
     public void setSMTPPort(int port) {
-        _config.setProperty(PROP_SMTP_PORT, String.valueOf(port));
+        _config.setProperty(ServerInstance.PROP_SMTP_PORT, String.valueOf(port));
     }
 
     public int getPOP3Port() {
-        return _config.getInt(PROP_POP3_PORT, DEFAULT_POP3_PORT);
+        return _config.getInt(ServerInstance.PROP_POP3_PORT, DEFAULT_POP3_PORT);
     }
 
     public void setPOP3Port(int port) {
-        _config.setProperty(PROP_POP3_PORT, String.valueOf(port));
+        _config.setProperty(ServerInstance.PROP_POP3_PORT, String.valueOf(port));
     }
 
     public int getServerSocketTimeout() {
-        return _config.getInt(PROP_SERVER_SOCKET_TIMEOUT, SERVER_SOCKET_TIMEOUT);
+        return _config.getInt(ServerInstance.PROP_SERVER_SOCKET_TIMEOUT, SERVER_SOCKET_TIMEOUT);
     }
 
     public void setServerSocketTimeout(int millis) {
-        _config.setProperty(PROP_SERVER_SOCKET_TIMEOUT, String.valueOf(millis));
+        _config.setProperty(ServerInstance.PROP_SERVER_SOCKET_TIMEOUT, String.valueOf(millis));
     }
 }

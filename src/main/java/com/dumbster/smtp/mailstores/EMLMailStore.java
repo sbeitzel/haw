@@ -10,23 +10,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.dumbster.smtp.MailMessage;
-import com.dumbster.smtp.MailStore;
 import com.dumbster.smtp.eml.EMLMailMessage;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.qbcps.haw.ServerInstance.PROP_MAIL_DIR;
 
 /**
  * Store messages as EML files.
  * <br/>This class makes no guarantees as to the order of the received messages.
  * The messages are stored in order but getMessages won't return messages in the same order they were received.
  */
-public class EMLMailStore implements MailStore {
+public class EMLMailStore extends AbstractMailStore {
     private static final Logger __l = LoggerFactory.getLogger(EMLMailStore.class);
 
     private boolean initialized;
     private int count = 0;
     private File directory = new File("eml_store");
     private List<MailMessage> messages = new ArrayList<MailMessage>();
+
+    public EMLMailStore(AbstractConfiguration config) {
+        setDirectory(config.getString(PROP_MAIL_DIR));
+    }
 
     /**
      * Checks if mail mailStore is initialized and initializes it if it's not.
@@ -51,8 +57,10 @@ public class EMLMailStore implements MailStore {
         for (File file : files) {
             MailMessage message = new EMLMailMessage(file);
             messages.add(message);
+            incrementTotalReceived();
         }
         count = files.length;
+        setMessageCount(count);
     }
 
     /**
@@ -85,6 +93,8 @@ public class EMLMailStore implements MailStore {
         checkInitialized();
         count++;
         messages.add(message);
+        incrementTotalReceived();
+        setMessageCount(count);
 
         __l.info("Received message: " + count);
 
@@ -155,6 +165,7 @@ public class EMLMailStore implements MailStore {
             count--;
         }
         messages.clear();
+        setMessageCount(0);
     }
 
     @Override
