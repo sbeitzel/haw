@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?><?import javafx.scene.control.ButtonBar?><?import javafx.scene.control.Menu?><?import javafx.scene.control.MenuBar?><?import javafx.scene.control.MenuItem?><?import javafx.scene.control.ScrollPane?><?import javafx.scene.control.TableColumn?><?import javafx.scene.control.TableView?><?import javafx.scene.control.TitledPane?><?import javafx.scene.input.KeyCodeCombination?><?import javafx.scene.layout.AnchorPane?><?import javafx.scene.layout.GridPane?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="/com/qbcps/haw/styles.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.qbcps.haw.Dashboard">
+    <MenuBar fx:id="_mBar" prefHeight="29.0" prefWidth="485.0" GridPane.columnSpan="2">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handlePreferences" text="Preferences">
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="SEMICOLON" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
+            <MenuItem mnemonicParsing="false" onAction="#handleQuit" text="Quit">
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="Q" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                </accelerator>
+            </MenuItem>
+        </Menu>
+    </MenuBar>
+    <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutY="29.0" prefHeight="178.0" prefWidth="485.0" text="Dumbster Servers">
+        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+            <TableView focusTraversable="false" prefHeight="151.0" prefWidth="466.0" fx:id="_serverTable">
+                <columns>
+                    <TableColumn fx:id="_smtpPort" editable="false" prefWidth="75.0" sortable="false" text="SMTP Port" />
+                    <TableColumn fx:id="_popPort" editable="false" prefWidth="75.0" sortable="false" text="POP3 Port" />
+                    <TableColumn fx:id="_messageCount" editable="false" prefWidth="75.0" sortable="false" text="Messages" />
+                    <TableColumn fx:id="_receivedCount" editable="false" prefWidth="75.0" sortable="false" text="Received" />
+                </columns>
+            </TableView>
+        </ScrollPane>
+    </TitledPane>
+   <ButtonBar layoutY="231.0" prefHeight="40.0" prefWidth="485.0">
+     <buttons>
+         <Button fx:id="_newButton" mnemonicParsing="false" onAction="#handleNew" text="New" />
+       <Button fx:id="_stopButton" disable="true" mnemonicParsing="false" onAction="#handleStop" text="Stop" />
+     </buttons>
+   </ButtonBar>
+</AnchorPane>

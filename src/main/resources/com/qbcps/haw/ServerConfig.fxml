@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?><?import javafx.scene.control.ButtonBar?><?import javafx.scene.control.ChoiceBox?><?import javafx.scene.control.Label?><?import javafx.scene.control.TextField?><?import javafx.scene.control.TitledPane?><?import javafx.scene.layout.AnchorPane?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.qbcps.haw.ServerConfig">
+    <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0" prefHeight="126.0" prefWidth="202.0" text="SMTP">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="200.0">
+            <Label alignment="BASELINE_LEFT" layoutX="15.0" layoutY="14.0" text="Port" />
+            <Label alignment="BASELINE_LEFT" layoutX="2.0" layoutY="54.0" text="Threads" />
+            <TextField fx:id="_smtpPort" layoutX="60.0" layoutY="9.0" prefHeight="27.0" prefWidth="81.0" />
+            <TextField fx:id="_smtpThreads" layoutX="60.0" layoutY="49.0" prefHeight="27.0" prefWidth="81.0" />
+        </AnchorPane>
+    </TitledPane>
+    <TitledPane animated="false" collapsible="false" layoutX="222.0" layoutY="14.0" text="POP3">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="98.0" prefWidth="200.0">
+            <TextField fx:id="_popPort" layoutX="102.0" layoutY="14.0" prefHeight="27.0" prefWidth="84.0" />
+            <TextField fx:id="_popThreads" layoutX="102.0" layoutY="56.0" prefHeight="27.0" prefWidth="84.0" />
+            <Label layoutX="14.0" layoutY="19.0" text="Port" />
+            <Label layoutX="10.0" layoutY="61.0" text="Threads" />
+        </AnchorPane>
+    </TitledPane>
+    <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="231.0" prefHeight="155.0" prefWidth="411.0" text="Mail Store">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <ChoiceBox fx:id="_mailStoreClass" layoutX="193.0" layoutY="15.0" prefHeight="27.0" prefWidth="202.0" />
+            <Label layoutX="14.0" layoutY="20.0" text="Mail store implementation" />
+            <Label fx:id="_storePrefLabel" layoutX="14.0" layoutY="96.0" text="Setting" />
+            <TextField fx:id="_storeSetting" layoutX="193.0" layoutY="91.0" prefHeight="27.0" prefWidth="202.0" />
+        </AnchorPane>
+    </TitledPane>
+    <ButtonBar layoutX="223.0" layoutY="402.0" prefHeight="40.0" prefWidth="202.0">
+      <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="OK" />
+          <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+      </buttons>
+    </ButtonBar>
+    <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="143.0" prefHeight="85.0" prefWidth="411.0"
+        text="Server Sockets">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <Label layoutX="14.0" layoutY="6.0" text="Socket timeout" />
+            <TextField fx:id="_socketTimeout" layoutX="205.0" layoutY="1.0" prefHeight="27.0" prefWidth="202.0"
+                promptText="timeout (milliseconds)" text="5000" />
+        </AnchorPane>
+    </TitledPane>
+</AnchorPane>

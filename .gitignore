@@ -1,0 +1,9 @@
+# Ignore IDE files
+.idea
+*.iml
+
+# Ignore build products
+target
+
+# Ignore GIMP files
+*.xcf
