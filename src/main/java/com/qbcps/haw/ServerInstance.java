@@ -4,6 +4,7 @@ package com.qbcps.haw;
          */
 
 import java.lang.reflect.Constructor;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -12,9 +13,14 @@ import java.util.concurrent.TimeUnit;
 import com.dumbster.pop.POPServer;
 import com.dumbster.smtp.SmtpServer;
 import com.dumbster.smtp.mailstores.AbstractMailStore;
+import com.dumbster.smtp.mailstores.EMLMailStore;
+import com.dumbster.smtp.mailstores.FixedSizeMailStore;
 import com.dumbster.smtp.mailstores.NullMailStore;
 import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.commons.configuration2.AbstractConfiguration;
+import org.apache.commons.configuration2.MapConfiguration;
+import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,6 +85,42 @@ public class ServerInstance {
             }
         }
         return servers;
+    }
+
+    public static ServerInstance startService(JSONObject params) {
+        HashMap<String, Object> pMap = new HashMap<>();
+        MapConfiguration config = new MapConfiguration(pMap);
+        config.setListDelimiterHandler(new DefaultListDelimiterHandler(','));
+
+        config.addProperty(PROP_NUM_SMTP_THREADS, params.get(PROP_NUM_SMTP_THREADS));
+        config.addProperty(PROP_NUM_POP3_THREADS, params.get(PROP_NUM_POP3_THREADS));
+        config.addProperty(PROP_SMTP_PORT, params.get(PROP_SMTP_PORT));
+        config.addProperty(PROP_POP3_PORT, params.get(PROP_POP3_PORT));
+        final Object msClassName = params.get(PROP_MAILSTORE_CLASS);
+        config.addProperty(PROP_MAILSTORE_CLASS, msClassName);
+        config.addProperty(PROP_SERVER_SOCKET_TIMEOUT, params.get(PROP_SERVER_SOCKET_TIMEOUT));
+        if (FixedSizeMailStore.class.getName().equals(msClassName)) {
+            config.addProperty(PROP_MAXSIZE, params.get(PROP_MAXSIZE));
+        } else if (EMLMailStore.class.getName().equals(msClassName)) {
+            config.addProperty(PROP_MAIL_DIR, params.get(PROP_MAIL_DIR));
+        }
+        return startService(config);
+    }
+
+    public JSONObject getParameters() {
+        JSONObject params = new JSONObject();
+        params.put(PROP_SMTP_PORT, _smtpPort.get());
+        params.put(PROP_NUM_SMTP_THREADS, _smtpServer.getThreadCount());
+        params.put(PROP_POP3_PORT, _popPort.get());
+        params.put(PROP_NUM_POP3_THREADS, _popServer.getThreadCount());
+        params.put(PROP_SERVER_SOCKET_TIMEOUT, _smtpServer.getSocketTimeout());
+        params.put(PROP_MAILSTORE_CLASS, _mailStore.getClass().getName());
+        if (_mailStore instanceof FixedSizeMailStore) {
+            params.put(PROP_MAXSIZE, ((FixedSizeMailStore)_mailStore).getMaxSize());
+        } else if (_mailStore instanceof EMLMailStore) {
+            params.put(PROP_MAIL_DIR, ((EMLMailStore) _mailStore).getDirectory().getAbsolutePath());
+        }
+        return params;
     }
 
     private ServerInstance(int smtpPort, int pop3Port, int smtpThreads, int pop3Threads, AbstractMailStore mailStore, int socketTimeout) {

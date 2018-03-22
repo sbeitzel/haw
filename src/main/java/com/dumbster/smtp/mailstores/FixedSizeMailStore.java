@@ -35,6 +35,10 @@ public class FixedSizeMailStore extends AbstractMailStore {
         }
     }
 
+    public int getMaxSize() {
+        return _maxSize;
+    }
+
     @Override
     public void addMessage(MailMessage message) {
         __l.info("Message added - "+message.getFirstHeaderValue("From")+" "+message.getFirstHeaderValue("Subject"));

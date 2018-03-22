@@ -64,6 +64,14 @@ public abstract class AbstractSocketServer implements Runnable {
         }
     }
 
+    public int getThreadCount() {
+        return _threadCount;
+    }
+
+    public int getSocketTimeout() {
+        return _socketTimeout;
+    }
+
     public void initExecutor() {
         if (_executor == null) {
             ThreadFactory workerFactory = r -> {

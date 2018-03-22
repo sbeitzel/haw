@@ -31,6 +31,7 @@
         <commons-io.version>2.6</commons-io.version>
         <javafx-maven-plugin.version>8.8.3</javafx-maven-plugin.version>
         <jfx.bundler>dmg</jfx.bundler>
+        <json.org.version>20180130</json.org.version>
         <logback.version>1.2.3</logback.version>
         <main-class>com.qbcps.haw.Main</main-class>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
@@ -74,6 +75,12 @@
           <groupId>commons-io</groupId>
           <artifactId>commons-io</artifactId>
           <version>${commons-io.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.org.version}</version>
         </dependency>
 
         <dependency>

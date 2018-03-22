@@ -19,6 +19,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +64,25 @@ public class Dashboard implements Initializable {
             s.stop();
         }
         _servers.clear();
+    }
+
+    String getCurrentServerInstanceConfigs() {
+        JSONArray instances = new JSONArray();
+        for (ServerInstance si : _servers) {
+            instances.put(si.getParameters());
+        }
+        return instances.toString();
+    }
+
+    void startServersFromConfigs(String json) {
+        JSONArray servers = new JSONArray(json);
+        for (Object sc : servers) {
+            if (sc instanceof JSONObject) {
+                _servers.add(ServerInstance.startService((JSONObject) sc));
+            } else {
+                __l.warn("JSONArray contained a thing that isn't a JSONObject");
+            }
+        }
     }
 
     @SuppressWarnings("unused")

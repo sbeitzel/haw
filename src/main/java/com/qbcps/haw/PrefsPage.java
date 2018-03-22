@@ -27,6 +27,8 @@ public class PrefsPage {
     private static final double W_H_DEF = 600;
     private static final double W_W_DEF = 700;
 
+    private static final String PKEY_CURRENT_SERVERS = "services";
+
     public static double getMainWindowWidth() {
         return PREFS.getDouble(PKEY_WINDOW_WIDTH, W_W_DEF);
     }
@@ -41,6 +43,14 @@ public class PrefsPage {
 
     public static void setMainWindowHeight(double newValue) {
         PREFS.putDouble(PKEY_WINDOW_HEIGHT, newValue);
+    }
+
+    public static void setCurrentServerConfigs(String json) {
+        PREFS.put(PKEY_CURRENT_SERVERS, json);
+    }
+
+    public static String getCurrentServerConfigs() {
+        return PREFS.get(PKEY_CURRENT_SERVERS, "[]");
     }
 
     public static void display(Stage parent) {

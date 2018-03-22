@@ -181,6 +181,10 @@ public class EMLMailStore extends AbstractMailStore {
         this.directory = directory;
     }
 
+    public File getDirectory() {
+        return this.directory;
+    }
+
     /**
      * Filter only files matching name of files saved by EMLMailStore.
      */

@@ -37,6 +37,7 @@ public class Main extends Application {
             Parent root = loader.load(layoutIS);
             _dashboard = loader.getController();
             _dashboard.setStage(primaryStage);
+            _dashboard.startServersFromConfigs(PrefsPage.getCurrentServerConfigs());
 
             primaryStage.setTitle("haw - a simple email server for local testing"); // TODO get this string from one place
             primaryStage.setScene(new Scene(root, PrefsPage.getMainWindowWidth(), PrefsPage.getMainWindowHeight()));
@@ -53,6 +54,10 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         // write preferences
+        if (_dashboard != null) {
+            String currentServers = _dashboard.getCurrentServerInstanceConfigs();
+            PrefsPage.setCurrentServerConfigs(currentServers);
+        }
         // stop servers
         if (_dashboard != null) {
             _dashboard.stopAll();
