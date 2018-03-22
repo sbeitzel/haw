@@ -9,7 +9,7 @@
 
     <groupId>com.qbcps</groupId>
     <artifactId>haw</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0</version>
     <description>A GUI front end for simple local SMTP and POP3 services, for testing</description>
     <packaging>jar</packaging>
 
