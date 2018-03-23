@@ -5,6 +5,7 @@ package com.dumbster.smtp.mailstores;
 
 import com.dumbster.smtp.MailStore;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,12 +18,12 @@ public abstract class AbstractMailStore implements MailStore {
     private SimpleIntegerProperty _messageCount = new SimpleIntegerProperty(0);
     private SimpleIntegerProperty _totalReceived = new SimpleIntegerProperty(0);
 
-    public Integer getMessageCount() {
-        return _messageCount.getValue();
+    public ObservableValue<Number> getMessageCount() {
+        return _messageCount;
     }
 
-    public Integer getTotalReceived() {
-        return _totalReceived.getValue();
+    public SimpleIntegerProperty getTotalReceived() {
+        return _totalReceived;
     }
 
     void setMessageCount(int number) {

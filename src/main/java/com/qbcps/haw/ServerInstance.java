@@ -17,6 +17,7 @@ import com.dumbster.smtp.mailstores.EMLMailStore;
 import com.dumbster.smtp.mailstores.FixedSizeMailStore;
 import com.dumbster.smtp.mailstores.NullMailStore;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 import org.apache.commons.configuration2.AbstractConfiguration;
 import org.apache.commons.configuration2.MapConfiguration;
 import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
@@ -150,22 +151,22 @@ public class ServerInstance {
     }
 
     @SuppressWarnings("unused")
-    public Integer getSmtpPort() {
-        return _smtpPort.getValue();
+    public ObservableValue<Number> getSmtpPort() {
+        return _smtpPort;
     }
 
     @SuppressWarnings("unused")
-    public Integer getPopPort() {
-        return _popPort.getValue();
+    public ObservableValue<Number> getPopPort() {
+        return _popPort;
     }
 
     @SuppressWarnings("unused")
-    public Integer getMessageCount() {
+    public ObservableValue<Number> getMessageCount() {
         return _mailStore.getMessageCount();
     }
 
     @SuppressWarnings("unused")
-    public Integer getTotalReceived() {
+    public ObservableValue<Number> getTotalReceived() {
         return _mailStore.getTotalReceived();
     }
 }
