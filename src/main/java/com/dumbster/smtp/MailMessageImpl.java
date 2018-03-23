@@ -31,7 +31,7 @@ public class MailMessageImpl extends AbstractMailMessage {
     private StringBuffer body;
 
     public MailMessageImpl() {
-        headers = new HashMap<String, List<String>>(10);
+        headers = new HashMap<>(10);
         body = new StringBuffer();
     }
 
@@ -71,7 +71,7 @@ public class MailMessageImpl extends AbstractMailMessage {
     public void addHeader(String name, String value) {
         List<String> valueList = headers.get(name);
         if (valueList == null) {
-            valueList = new ArrayList<String>(1);
+            valueList = new ArrayList<>(1);
         }
         valueList.add(value);
         headers.put(name, valueList);
@@ -99,7 +99,7 @@ public class MailMessageImpl extends AbstractMailMessage {
     }
 
     private boolean shouldPrependNewline(String line) {
-        return body.length() > 0 && line.length() > 0 && !"\n".equals(line);
+        return body.length() > 0 && !line.isEmpty() && !"\n".equals(line);
     }
 
     @Override

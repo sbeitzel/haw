@@ -39,6 +39,7 @@ public class Dashboard implements Initializable {
     @FXML public TableColumn<ServerInstance, Number> _messageCount;
     @FXML public TableColumn<ServerInstance, Number> _receivedCount;
     @FXML public Button _newButton;
+    @FXML public Button _addMessageButton;
     @FXML public Button _stopButton;
 
     @Override
@@ -51,7 +52,10 @@ public class Dashboard implements Initializable {
         _messageCount.setCellValueFactory(param -> param.getValue().getMessageCount());
         _receivedCount.setCellValueFactory(param -> param.getValue().getTotalReceived());
 
-        _serverTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> _stopButton.setDisable(newValue == null));
+        _serverTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            _stopButton.setDisable(newValue == null);
+            _addMessageButton.setDisable(newValue == null);
+        });
     }
 
     void setStage(Stage stage) {
@@ -115,6 +119,15 @@ public class Dashboard implements Initializable {
         if (s != null) {
             s.stop();
             _servers.remove(s);
+        }
+    }
+
+    @FXML
+    @SuppressWarnings("unused")
+    public void handleAddMessage(ActionEvent evt) {
+        ServerInstance s = _serverTable.getSelectionModel().getSelectedItem();
+        if (s != null) {
+            AddMessage.display(_stage, s);
         }
     }
 }

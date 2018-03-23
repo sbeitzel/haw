@@ -13,9 +13,17 @@ Features
 Version History
 ===
 ## Current
-The current development version is 1.0.0-SNAPSHOT
+The current development version is 1.0.1-SNAPSHOT
+ * Fix bug where displayed number of messages in mail stores didn't update
+ * Add ability to paste a raw email into a form and insert that message into a mailbox
 
+
+## Previous
+### 1.0
  * Forked from dumbster development branch at commit 2dda522b7804fbdafcc7626412b131705216f927
+ * Added a JavaFX UI
+ * Save the running server configurations (but not the contents of the mail stores) at app shutdown, and restore them next time the app launches
+ * `mvn package` creates a DMG installer for MacOS X
  
 
 LICENSE

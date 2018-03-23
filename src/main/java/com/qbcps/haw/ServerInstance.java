@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.dumbster.pop.POPServer;
+import com.dumbster.smtp.MailMessage;
 import com.dumbster.smtp.SmtpServer;
 import com.dumbster.smtp.mailstores.AbstractMailStore;
 import com.dumbster.smtp.mailstores.EMLMailStore;
@@ -106,6 +107,10 @@ public class ServerInstance {
             config.addProperty(PROP_MAIL_DIR, params.get(PROP_MAIL_DIR));
         }
         return startService(config);
+    }
+
+    public void receiveMessage(MailMessage message) {
+        _mailStore.addMessage(message);
     }
 
     public JSONObject getParameters() {
