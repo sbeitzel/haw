@@ -32,7 +32,8 @@
    <ButtonBar layoutY="231.0" prefHeight="40.0" prefWidth="485.0">
      <buttons>
          <Button fx:id="_newButton" mnemonicParsing="false" onAction="#handleNew" text="New" />
-       <Button fx:id="_stopButton" disable="true" mnemonicParsing="false" onAction="#handleStop" text="Stop" />
+         <Button fx:id="_addMessageButton" disable="true" mnemonicParsing="false" onAction="#handleAddMessage" text="Add Message..." />
+         <Button fx:id="_stopButton" disable="true" mnemonicParsing="false" onAction="#handleStop" text="Stop" />
      </buttons>
    </ButtonBar>
 </AnchorPane>

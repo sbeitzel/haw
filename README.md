@@ -13,7 +13,14 @@ Features
 Version History
 ===
 ## Current
-The current version is 1.0
+### 1.0.1
+
+ * Fix bug where displayed number of messages in mail stores didn't update
+ * Add ability to paste a raw email into a form and insert that message into a mailbox
+
+
+## Previous
+### 1.0
 
  * Forked from dumbster development branch at commit 2dda522b7804fbdafcc7626412b131705216f927
  * Added a JavaFX UI

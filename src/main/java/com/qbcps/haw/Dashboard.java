@@ -17,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,11 +34,12 @@ public class Dashboard implements Initializable {
 
     @FXML public MenuBar _mBar;
     @FXML public TableView<ServerInstance> _serverTable;
-    @FXML public TableColumn<ServerInstance, Integer> _smtpPort;
-    @FXML public TableColumn<ServerInstance, Integer> _popPort;
-    @FXML public TableColumn<ServerInstance, Integer> _messageCount;
-    @FXML public TableColumn<ServerInstance, Integer> _receivedCount;
+    @FXML public TableColumn<ServerInstance, Number> _smtpPort;
+    @FXML public TableColumn<ServerInstance, Number> _popPort;
+    @FXML public TableColumn<ServerInstance, Number> _messageCount;
+    @FXML public TableColumn<ServerInstance, Number> _receivedCount;
     @FXML public Button _newButton;
+    @FXML public Button _addMessageButton;
     @FXML public Button _stopButton;
 
     @Override
@@ -47,12 +47,15 @@ public class Dashboard implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         _servers = FXCollections.observableList(new ArrayList<>());
         _serverTable.setItems(_servers);
-        _smtpPort.setCellValueFactory(new PropertyValueFactory<>("smtpPort"));
-        _popPort.setCellValueFactory(new PropertyValueFactory<>("popPort"));
-        _messageCount.setCellValueFactory(new PropertyValueFactory<>("messageCount"));
-        _receivedCount.setCellValueFactory(new PropertyValueFactory<>("totalReceived"));
+        _smtpPort.setCellValueFactory(param -> param.getValue().getSmtpPort());
+        _popPort.setCellValueFactory(param -> param.getValue().getPopPort());
+        _messageCount.setCellValueFactory(param -> param.getValue().getMessageCount());
+        _receivedCount.setCellValueFactory(param -> param.getValue().getTotalReceived());
 
-        _serverTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> _stopButton.setDisable(newValue == null));
+        _serverTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            _stopButton.setDisable(newValue == null);
+            _addMessageButton.setDisable(newValue == null);
+        });
     }
 
     void setStage(Stage stage) {
@@ -116,6 +119,15 @@ public class Dashboard implements Initializable {
         if (s != null) {
             s.stop();
             _servers.remove(s);
+        }
+    }
+
+    @FXML
+    @SuppressWarnings("unused")
+    public void handleAddMessage(ActionEvent evt) {
+        ServerInstance s = _serverTable.getSelectionModel().getSelectedItem();
+        if (s != null) {
+            AddMessage.display(_stage, s);
         }
     }
 }

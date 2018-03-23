@@ -1,0 +1,165 @@
+Delivered-To: test@dumbster
+Received: by 10.46.95.197 with SMTP id x66csp3298475lje;
+        Mon, 5 Mar 2018 19:54:45 -0800 (PST)
+X-Google-Smtp-Source: AG47ELt++3Jr+VA7Cf9u9250aLkM1dsIz8ueQiuu+4Jwt8mw11yhU/obc+oPD5pVVCIJPskoJZOj
+X-Received: by 10.55.186.194 with SMTP id k185mr25579688qkf.74.1520308485364;
+        Mon, 05 Mar 2018 19:54:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1520308485; cv=none;
+        d=google.com; s=arc-20160816;
+        b=cf8G6hHL7Z/XYg518vojSgezkgMcVTmHRz6Zz4WcwkwkYbXpoRZBS1kufy+qeZ+dEo
+         8n1kO72ZFg71LvzOS5a8KIpnFCcH/MHdQN3L3lyfNQfcikJthwrrdDJjYwR28V+l4hUi
+         D/ri3RMuVLgijl+Bi5T1OOpwwrZe5ohbnFn93bkqe0knfkzDil9Mj7MVIy8hzO4QqGe0
+         t58WVKY1WgfPQGTWs9cxLqhNCIK7ivejKU3BiBDlmDIfPUI4uE4jchCIOCLyP2qI29tq
+         J27kIe2ElUnGWjxs7XpxMpAbx3y8tkNItFqXJKoBuy5Q082m73dR7oUEbkKAOUVHMCQN
+         4s0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:spamdiagnosticmetadata:spamdiagnosticoutput
+         :content-language:accept-language:message-id:date:thread-index
+         :thread-topic:subject:from:dkim-signature:delivered-to
+         :arc-authentication-results;
+        bh=85634oZNGSeIu/eCnJyI21E3/EKzpuSTA2MwLN78igU=;
+        b=1KNvNeeGatZXedBCoSgi7hbVhiQdtdna64PuhR57ixtiwAPZxCpYgc9TVMwxwtm5ZX
+         i5srBErnrJB6Ocz0UaENDR8AH8xsbdUsIx3okgc8AqkpLZ/QsX263cj1+qYHdwB+tVA2
+         T8iFawNTTnunCgLZvMBysDEyQOo6IQJ4LherLJIJw+8yhaZv7TVGrslQdbA0wryhwGE8
+         z9g+TJHvvUoQ/dfqmih3KA9UXdubfdZkghsJ3wdBnWjHDHuE/WBk7nGPEW2tnVOh0Z7n
+         azZqhxxbs2hFuaz5tun62UrkldD8bIHJXp71xOLMAfl5sd4dylH6GBChVVIjcHPMuNZj
+         lZTA==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=LRALMbvT;
+       spf=pass (google.com: domain of srs0=0gpw=f4=hotmail.com=barr.emeka9855@bounce2.pobox.com designates 64.147.108.52 as permitted sender) smtp.mailfrom=SRS0=0Gpw=F4=hotmail.com=barr.emeka9855@bounce2.pobox.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=hotmail.com
+Return-Path: <SRS0=0Gpw=F4=hotmail.com=barr.emeka9855@bounce2.pobox.com>
+Received: from pb-mx11.pobox.com (pb-mx11.pobox.com. [64.147.108.52])
+        by mx.google.com with ESMTPS id z15si14312801qth.434.2018.03.05.19.54.45
+        for <test@dumbster>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 Mar 2018 19:54:45 -0800 (PST)
+Received-SPF: pass (google.com: domain of srs0=0gpw=f4=hotmail.com=barr.emeka9855@bounce2.pobox.com designates 64.147.108.52 as permitted sender) client-ip=64.147.108.52;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=LRALMbvT;
+       spf=pass (google.com: domain of srs0=0gpw=f4=hotmail.com=barr.emeka9855@bounce2.pobox.com designates 64.147.108.52 as permitted sender) smtp.mailfrom=SRS0=0Gpw=F4=hotmail.com=barr.emeka9855@bounce2.pobox.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=hotmail.com
+Received: from pb-mx11.nyi.icgroup.com (localhost.local [127.0.0.1])
+	by pb-mx11.pobox.com (Postfix) with ESMTP id 0409518954
+	for <test@dumbster>; Mon,  5 Mar 2018 22:54:45 -0500 (EST)
+X-Pobox-Loop-ID: 533ce0d1f484dd15e2c97db6f9c302160d5c0008
+Delivered-To: testB@dumbster
+X-Pobox-Delivery-ID: E285A2-7978218952-1520308484-37124633!pb-mx11.pobox.com
+Received: from EUR01-VE1-obe.outbound.protection.outlook.com (mail-oln040092066034.outbound.protection.outlook.com [40.92.66.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-mx11.pobox.com (Postfix) with ESMTPS id 7978218952
+	for <testB@dumbster>; Mon,  5 Mar 2018 22:54:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=85634oZNGSeIu/eCnJyI21E3/EKzpuSTA2MwLN78igU=;
+ b=LRALMbvTC7qtCHWmq8RKbFaUcsRQob+0CXeJvlcAdlvdM6wDRSXM47hSmo4nCOO7c5p7DK4sHrjijkguasnNmeUSqTx1QyFdid387RKCMtk1bIxpmQzYSt0ECyZUww13QSla+UuGfw4l8LtIxdfmwC4Y/3/c17NeYWhPM4CeJH2CvqE/eEzUglSZjMnfVdXFEGgP/WETzcg4Tmm1kGZ0w3YZttdddVCW2CAuVZylVH2uijcgwPu2o82qt5s8n2A542mDLlsKNONviIXj4Hy/F0wGBV0t6g6vq+5RX4KgaieFUvCGIVThaKBjS/2curhQiwTXBNbAXHXpX2p0Bn+Fqw==
+Received: from HE1EUR01FT059.eop-EUR01.prod.protection.outlook.com
+ (10.152.0.57) by HE1EUR01HT045.eop-EUR01.prod.protection.outlook.com
+ (10.152.1.76) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id 15.20.527.15; Tue, 6
+ Mar 2018 03:54:39 +0000
+Received: from CWXP265MB0469.GBRP265.PROD.OUTLOOK.COM (10.152.0.53) by
+ HE1EUR01FT059.mail.protection.outlook.com (10.152.0.241) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.527.22 via Frontend Transport; Tue, 6 Mar 2018 03:54:38 +0000
+Received: from CWXP265MB0469.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::a1f5:924b:4276:c4db]) by CWXP265MB0469.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::a1f5:924b:4276:c4db%13]) with mapi id 15.20.0548.016; Tue, 6 Mar 2018
+ 03:54:38 +0000
+From: "DR. AGUILAR GEORGE" <barr.emeka9855@hotmail.com>
+Subject: YOUR PAYMENT IS READY
+Thread-Topic: YOUR PAYMENT IS READY
+Thread-Index: AQHTtP7Y5CjuzpftdE+6btsJot+tAQ==
+Date: Tue, 6 Mar 2018 03:54:38 +0000
+Message-ID: <CWXP265MB04693F47902A9B24F5EBD5E084D90@CWXP265MB0469.GBRP265.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-incomingtopheadermarker: OriginalChecksum:AF96992ABF936D969D6FE70AD149E64DA84FA496BB23FED8F08CBC7A4AB84FC6;UpperCasedChecksum:B1F1546EF199B5D271B177F9DD72F75B96776ECEE13BC0357D7D522CE0BCF284;SizeAsReceived:12107;Count:42
+x-tmn: [MlMYCepJqu6sA/MeJ2sV/iRQG59nGJ5x]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;HE1EUR01HT045;6:9eY7ucY5VNLwRiqs5ic5FFLvRFrdob7Exm8vrURaL+CNwLkyThaU4i8IGKi6UVKO+i1LZ2e8i3Bt4Af8kzeRlLAzgdbC2/MLSf7+QQDflBcSSeWJwRJJ4DVhR9NDj9b7yXt6fjwm316vr5Z5zjISWmAJyjnqLpd0BLHHzUgnEjj5FkTzJG2hGuOgZWEJb+ebMu2We5sOyywFxkyNZ/8oP4+rPRTWK3UtGJjb8BHAg1vUHPUOmmujEfGQvVq/QshOz7GkMnsGro8xe/vOMDHf7X6nnAdQkmfLg8yzV5ZVb92NkhRs4AUNbtUWMvC1xK+rqS6Q9haJrEVEOKEK84048QCWUNwkBAvItEjwZrV8qm0=;5:3XHJM5Zpc2MD9+U6r7V/SR2E00moDvwcuVEASVsExZ7LlaIdWNPR1hPajO7Uplrdl9D6ngm7psyhRqNAbhgWgAnxcm0WQGds7/SgxhLv601LZBgD130RY5gc2TPSfFDqcIZcUg5hBNpRgZnFuyIKe3foWFeW3WkwF4lnDDng4s8=;24:aE5AK6t+UMbeujDStr3EvIT0TKfvYqWV4Nvu+++15yFMPhbPB62fhaB+5rC/1inYa6X3zZ8lqkv0VCL7fDxy5BL1TjDCG8lzUStF9XIK1rU=;7:ZMzrFNRVMYHLwffnSsc+Ah7lNNH0POkJ8V9H7rOrza6YCoP0VJlbwAO4kCv/VLMBGZXlwswjs5pnQq3vIgwQCt6VmXT33/g1fmQDd/5q3PkPbgGiyfSUA4FWez0sptLE0HpMe+P1eqn3QIvoVAso0nWXeEKER8blRJ2O7fF9n/wynjwJ+8IlVyVlxMspLjjXaa3LJVLGEXtacfdJNJ/6sJ8owz9wvnQFo6ABNhpJiSTC7tYqy8AvOWBh81y19N2j
+x-incomingheadercount: 42
+x-eopattributedmessage: 0
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031323274)(201702181274)(2017031326274)(2017031322404)(1601125374)(1603101448)(1701031045);SRVR:HE1EUR01HT045;
+x-ms-exchange-slblob-mailprops: cR2SUrTzBEuPIWie6vj7ohjlqxO+NAX6uISfg1arynM+vvxeBt0CsHH0SclublktV91J2u36dJJRTJTWmQa2zO70gPeLyo9oVKubu4D6ZnOZNjbmFKaI7QgkOk6e84oV5XCVOwWrxhKsCqQmakdZ5YEtGXMfU6JyWc9U/r8UtaNoVxZZcy+nymHyyr8Nb+seacNjvZSvsoo1M+uIrfc+IsbG2FEENiVk7x1sI6n5AnjBFeBsP5dMR2RiiEdHbqobDWUs4IujQA0r0LkCuR6FpejMjTeLtAdVFlRgxRzvLuRbiiJhQBvFWF8PCCPwWN7UxoyBO8bMZ2ETgNCnx+w2g8Yj32QirTyz2I1hld/U7nNyEdeHHhus6/9k50Bi4QsrgjpDccmW5ucbkCtM5x7ZkWXQHeSWmwKBlLjaMMQszOxuxE2Sgwsn4wYdzrzSn/maO5SbaDmqHNro8QfVbNjNoSiHxBUwGh7GAWf58Y0gOPsCXNMKtIVyfbl1EE/QzksA3rqQP2caODNLYZXzZDgtZvbnSt+lt9JxTk1unQM1RyhpbEkygZoD4KpEdFx3OgSPoEr4twGrSKDqu6+4YjjY4RCh5NfReMfhq+c7bD/uN5b9TNlIzaBHim+NxTXkgveYySrc/8cDvYksPWKvGe58xx3/ku8BEADN
+x-ms-traffictypediagnostic: HE1EUR01HT045:
+x-ms-office365-filtering-correlation-id: 9fe66042-c963-4bc9-309c-08d58315fc05
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(444000031);SRVR:HE1EUR01HT045;BCL:0;PCL:0;RULEID:;SRVR:HE1EUR01HT045;
+x-forefront-prvs: 06036BD506
+x-forefront-antispam-report: SFV:NSPM;SFS:(7070007)(98901004);DIR:OUT;SFP:1901;SCL:1;SRVR:HE1EUR01HT045;H:CWXP265MB0469.GBRP265.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:;
+x-microsoft-antispam-message-info: 9GGNR+zLWDmCja9Mf63NkcPvAN9Z/k7ApP2Prl/VBqNTpZSepS+qXwiqaet2PlOwpmP4cOBbG4MvzrANutH3jbb68JQyz5uiaNUDN5maUYBQxEFB4B+sa5xWfLEwKGnlM3c3abspTFJuX3FciSpMWFT7YWdCIuhQl7f+lrtQgqJIcd6DUoMAQTRheyppzxXY
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: multipart/alternative;
+	boundary="_000_CWXP265MB04693F47902A9B24F5EBD5E084D90CWXP265MB0469GBRP_"
+MIME-Version: 1.0
+X-OriginatorOrg: hotmail.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9fe66042-c963-4bc9-309c-08d58315fc05
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Mar 2018 03:54:38.6512
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1EUR01HT045
+X-Pobox-Client-Address: 40.92.66.34
+X-Pobox-Client-Name: mail-oln040092066034.outbound.protection.outlook.com
+X-Pobox-Client-HELO: eur01-ve1-obe.outbound.protection.outlook.com
+X-Pobox-Original-Sender: barr.emeka9855@hotmail.com
+
+--_000_CWXP265MB04693F47902A9B24F5EBD5E084D90CWXP265MB0469GBRP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Friend
+We have concluded to effect your payment through WESTERN UNION $7000.00 dai=
+ly until the $7,500,000.00 is completely transferred. Though, Jane Mark sen=
+t $7000.00 in your name today so contact Western Union Agent: DR.KELVIN MOR=
+GAN E-mail: w.officedepartment@yahoo.fr<mailto:mg.office878463@gmail.com> w=
+ith your name and your address also with your telephone number. and tell hi=
+m to give you the Mtcn number, sender name and question/answer to pick the =
+$7000.00 Thanks Mrs. Silver Marthins
+
+
+
+--_000_CWXP265MB04693F47902A9B24F5EBD5E084D90CWXP265MB0469GBRP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
+n-bottom:0;} --></style>
+</head>
+<body dir=3D"ltr">
+<div id=3D"divtagdefaultwrapper" style=3D"font-size:12pt;color:#000000;font=
+-family:Calibri,Helvetica,sans-serif;" dir=3D"ltr">
+<p style=3D"margin-top:0;margin-bottom:0"></p>
+<h1 style=3D"color: rgb(33, 33, 33); font-family: wf_segoe-ui_normal, &quot=
+;Segoe UI&quot;, &quot;Segoe WP&quot;, Tahoma, Arial, sans-serif, serif, Em=
+ojiFont;" id=3D"gmail-yui_3_16_0_ym19_1_1520307796370_2551">
+Dear Friend&nbsp;</h1>
+<h1 style=3D"color: rgb(33, 33, 33); font-family: wf_segoe-ui_normal, &quot=
+;Segoe UI&quot;, &quot;Segoe WP&quot;, Tahoma, Arial, sans-serif, serif, Em=
+ojiFont;" id=3D"gmail-yui_3_16_0_ym19_1_1520307796370_2552">
+We have concluded to effect your payment through WESTERN UNION $7000.00 dai=
+ly until the $7,500,000.00 is completely transferred. Though, Jane Mark sen=
+t $7000.00 in your name today so contact Western Union Agent: DR.KELVIN MOR=
+GAN E-mail:&nbsp;<span id=3D"gmail-yui_3_16_0_ym19_1_1520307796370_2553"></=
+span><a href=3D"mailto:mg.office878463@gmail.com" target=3D"_blank" rel=3D"=
+noopener noreferrer" style=3D"color: rgb(17, 85, 204);" id=3D"gmail-yui_3_1=
+6_0_ym19_1_1520307796370_2554">w.officedepartment@yahoo.fr</a>
+ with your name and your address also with your telephone number. and tell =
+him to give you the Mtcn number, sender name and question/answer to pick th=
+e $7000.00 Thanks Mrs. Silver Marthins</h1>
+<br>
+<br>
+<p></p>
+</div>
+</body>
+</html>
+
+--_000_CWXP265MB04693F47902A9B24F5EBD5E084D90CWXP265MB0469GBRP_--

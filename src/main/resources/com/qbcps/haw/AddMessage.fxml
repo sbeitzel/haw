@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Button?><?import javafx.scene.control.ButtonBar?><?import javafx.scene.control.ScrollPane?><?import javafx.scene.control.TextArea?><?import javafx.scene.layout.AnchorPane?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+    prefWidth="600.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.qbcps.haw.AddMessage">
+    <ScrollPane prefHeight="340.0" prefWidth="600.0" fitToWidth="true" fitToHeight="true">
+        <TextArea fx:id="_messageArea" promptText="Paste raw email here" />
+    </ScrollPane>
+    <ButtonBar layoutX="351.0" layoutY="346.0" prefHeight="40.0" prefWidth="235.0">
+      <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" text="Add" onAction="#handleAdd" />
+      </buttons>
+    </ButtonBar>
+</AnchorPane>

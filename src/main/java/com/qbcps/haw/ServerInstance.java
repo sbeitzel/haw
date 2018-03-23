@@ -11,12 +11,14 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.dumbster.pop.POPServer;
+import com.dumbster.smtp.MailMessage;
 import com.dumbster.smtp.SmtpServer;
 import com.dumbster.smtp.mailstores.AbstractMailStore;
 import com.dumbster.smtp.mailstores.EMLMailStore;
 import com.dumbster.smtp.mailstores.FixedSizeMailStore;
 import com.dumbster.smtp.mailstores.NullMailStore;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 import org.apache.commons.configuration2.AbstractConfiguration;
 import org.apache.commons.configuration2.MapConfiguration;
 import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
@@ -107,6 +109,10 @@ public class ServerInstance {
         return startService(config);
     }
 
+    public void receiveMessage(MailMessage message) {
+        _mailStore.addMessage(message);
+    }
+
     public JSONObject getParameters() {
         JSONObject params = new JSONObject();
         params.put(PROP_SMTP_PORT, _smtpPort.get());
@@ -150,22 +156,22 @@ public class ServerInstance {
     }
 
     @SuppressWarnings("unused")
-    public Integer getSmtpPort() {
-        return _smtpPort.getValue();
+    public ObservableValue<Number> getSmtpPort() {
+        return _smtpPort;
     }
 
     @SuppressWarnings("unused")
-    public Integer getPopPort() {
-        return _popPort.getValue();
+    public ObservableValue<Number> getPopPort() {
+        return _popPort;
     }
 
     @SuppressWarnings("unused")
-    public Integer getMessageCount() {
+    public ObservableValue<Number> getMessageCount() {
         return _mailStore.getMessageCount();
     }
 
     @SuppressWarnings("unused")
-    public Integer getTotalReceived() {
+    public ObservableValue<Number> getTotalReceived() {
         return _mailStore.getTotalReceived();
     }
 }
